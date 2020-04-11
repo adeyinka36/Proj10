@@ -48,7 +48,8 @@ class  App extends Component {
     <BrowserRouter>
       
         <Header/>
-        
+        <Switch>
+        <Route   exact path="/" component={CoursesWithContext}/>
         <Route   exact path="/courses" component={CoursesWithContext}/>
         <Route   exact path="/courses/:id" component={CourseDetailContext}/>
         <PrivateRoute  exact path="/courses/:id/update" component={CourseUpdateContext}/>
@@ -56,6 +57,7 @@ class  App extends Component {
         <Route   exact path="/signin-UserSignIn" component={SignInContext}/>
         <Route   exact path="/signup-UserSignUp"  component={SignUpContext}/>
         <Route  exact path="/signout-UserSignOut"component={SignOutContext}/>
+        </Switch>
          
       
     
