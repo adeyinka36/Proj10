@@ -9,7 +9,8 @@ class UserSignUp extends Component{
      lastName:"",
      emailAddress:"",
      password:"",
-     confirmPassword:""
+     confirmPassword:"",
+     errors:[]
   }
 }
   change=()=>{
@@ -41,6 +42,11 @@ submit=(e)=>{
     .then(res=>{if(res.status==201)
       {console.log("authenticated")}
       else{
+        if (res.length>=1){
+          this.setState({
+            errors:res
+          })
+        }
         console.log(`there was an error ${res.json()}`)
       }
   })
@@ -53,13 +59,31 @@ catch(err){
 }
 }    
     render(){
+      let error=false
+     if(this.state.errors.length>=1){
+       error=true
+     }
+     
         return(
    
       
       <div className="bounds">
         <div className="grid-33 centered signin">
           <h1>Sign Up</h1>
+          <h1>Create Course</h1>
+          {error?<div>
+            {/* vlidation errors/error */}
+            <div>
+            <h2 class="validation--errors--label">Validation errors</h2>
+            <div class="validation-errors">
+              <ul>
+                {error.map((error,i)=>`<li key={i}>${error}</li>`)}
+              </ul>
+            </div>
+          </div>
+          </div>:null}
           <div>
+
             <form>
               <div><input id="firstName" name="firstName" type="text" className="" placeholder="First Name" onChange={this.change}/></div>
               <div><input id="lastName" name="lastName" type="text" className="" placeholder="Last Name" onChange={this.change}/></div>

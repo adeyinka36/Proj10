@@ -7,9 +7,10 @@ export default class Data extends Component{
     constructor(props){
        super(props);
        this.state={
-        authentication:Cookies.getJSON('authenticatedUser') || null,
+        authentication:null,
           emailAddress:"",
-          password:""
+          password:"",
+          val:true
        }
      
     }
@@ -46,13 +47,16 @@ deleteCourse(val,emailAddress,password){
         const user={emailAddress,password}
          console.log(this.state.emailAddress)
         // let encodedCrendtials=btoa(`${login}:${password}`)
-        return fetch(`http://localhost:5000/api/users`,{
+        fetch(`http://localhost:5000/api/users`,{
              method:"GET",
              headers: new Headers({
             "Authorization": "Basic "+ btoa(emailAddress+":"+password)
           })
     })
-
+    this.setState({
+        authentication:user
+    })
+   
 } 
 
 createNewCourse(obj,emailAddress,password){

@@ -37,28 +37,30 @@ const password=this.state.password
 const signIn= this.props.context.data.signIn
 
 signIn(emailAddress,password)
-.then(response=>response.json())
-.then(res=>{if(res.status==401){
-  console.log(res)
+// .then(response=>response.json())
+// .then(res=>{if(res.status==401){
+//   console.log(res)
 
-}
-else{
-  const user={emailAddress:this.state.emailAddress,password:this.state.password}
-  this.setState({authenticated:user,id:res.id})
+// }
+// else{
+//   const user={emailAddress:this.state.emailAddress,password:this.state.password}
+//   this.setState({authenticated:user,id:res.id})
+//   this.props.context.data.setState({authentication:"YYN"})
+//   console.log(`we are in, here are the authenticated details to be saved in sign in stat : ${res}`)
+//   Cookies.set('authenticatedUser', JSON.stringify(user), { expires: 1 });
+//   this.props.context.data.setState({val:false})
   
-  console.log(`we are in, here are the authenticated details to be saved in sign in stat : ${res}`)
-  Cookies.set('authenticatedUser', JSON.stringify(user), { expires: 1 });
-  console.log("done")
+  
   
    
-}
+// }
 
-}).then(res=>{this.props.history.push(`/courses`)
-console.log( Cookies.getJSON('authenticatedUser'))
-Cookies.set("userId",JSON.stringify(this.state.id))}
-)
+// }).then(res=>{this.props.history.push(`/courses`)
+// console.log( Cookies.getJSON('authenticatedUser'))
+// Cookies.set("userId",JSON.stringify(this.state.id))}
+// )
 
-.catch(err=>console.log(`there was an error siginin in :${err}`))
+// .catch(err=>console.log(`there was an error siginin in :${err}`))
 }catch(err){
 console.log(`this is the try catch error : ${err}`)
 }

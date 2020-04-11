@@ -34,6 +34,7 @@ class UpdateCourse extends Component{
       this.props.context.data.getCourseDetail(this.props.match.params.id)
       .then(response=>
         response.json())
+    
       .then(res=>{this.setState({course:res,courseId:res.id,emailAddress:Cookies.getJSON('authenticatedUser').emailAddress,
     password:Cookies.getJSON('authenticatedUser').password})
     console.log("yes")})
