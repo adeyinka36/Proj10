@@ -32,8 +32,8 @@ deleteCourse(e){
         this.setState({course:res,
                         id:res.id,
                       userId:res.User.id,
-                      emailAddress:Cookies.getJSON('authenticatedUser').emailAddress,
-                      password:Cookies.getJSON("authenticatedUser").password
+                      // emailAddress:Cookies.getJSON('authenticatedUser').emailAddress,
+                      // password:Cookies.getJSON("authenticatedUser").password
         })})
        
       .then(res=>console.log(this.state.course.id))

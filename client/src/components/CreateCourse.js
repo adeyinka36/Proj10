@@ -26,6 +26,11 @@ class CreateCourse extends Component{
 createCourse=(e)=>{
   
   e.preventDefault()
+  document.getElementById('title').placeholder=""
+  document.getElementById('description').placeholder=""
+  document.getElementById('estimatedTime').placeholder=""
+  document.getElementById('materialsNeeded').placeholder=""
+
   console.log(this.state.title)
    const {password} =Cookies.getJSON('authenticatedUser');
    const {emailAddress}=Cookies.getJSON('authenticatedUser');

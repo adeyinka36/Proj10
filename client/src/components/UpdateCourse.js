@@ -124,7 +124,7 @@ class UpdateCourse extends Component{
               </div>
               
             </div>
-            <div className="grid-100 pad-bottom"><button className="button" onClick={this.update}>Update Course</button><button className="button button-secondary"  to='/courses'>Cancel</button></div>
+            <div className="grid-100 pad-bottom"><button className="button" onClick={this.update}>Update Course</button><Link to="/courses"><button className="button button-secondary"  to='/courses'>Cancel</button></Link></div>
           </form>
         </div>
         

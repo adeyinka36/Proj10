@@ -3,15 +3,16 @@ import {Redirect,Route} from 'react-router-dom'
 import React, {Component} from 'react'
 import Cookies from 'js-cookie';
 
-const   PrivateRoute= ({component:Component,...rest})=>{
-    let val=Cookies.getJSON('authenticatedUser')
-    console.log(val)
+const   PrivateRoute=  ({component:Component,...rest})=>{
+
+    
+    
    return(
        <UserConsumer>
            {context=>(
                <Route
                {...rest}
-               render={props=> val ? (<Component {...props}/>):(<Redirect to="/signup-UserSignUp"/>)}/>
+               render={props=> context.authentication? (<Component {...props}/>):(<Redirect to="/signup-UserSignUp"/>)}/>
            )}
        </UserConsumer>
    )

@@ -23,7 +23,7 @@ export class Provider extends Component{
 render(){
     
     const value ={
-         authentication:Cookies.getJSON('authenticatedUser'),
+         authentication:this.state.authentication,
         data:this.data
           }
 
