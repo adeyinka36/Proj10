@@ -1,5 +1,5 @@
 import React, { Component} from 'react';
-import {Link} from 'react-router-dom';
+import {Link, Redirect} from 'react-router-dom';
 import ReactMarkdown from 'react-markdown';
 import Cookies from 'js-cookie';
 
@@ -31,6 +31,7 @@ class UpdateCourse extends Component{
     }
     componentDidMount(){
       console.log("yes wroking so far")
+
       this.props.context.data.getCourseDetail(this.props.match.params.id)
       .then(response=>
         response.json())
@@ -38,6 +39,8 @@ class UpdateCourse extends Component{
       .then(res=>{this.setState({course:res,courseId:res.id,emailAddress:Cookies.getJSON('authenticatedUser').emailAddress,
     password:Cookies.getJSON('authenticatedUser').password})
     console.log("yes")})
+    // redirect to forbidden if id stored in cookies isnt the same as the user id return for this course using the ".then" below
+    // .then(res=>)
       
        .catch(err=>console.log(`there was this error ${err}`))
     }
@@ -53,23 +56,24 @@ class UpdateCourse extends Component{
                   estimatedTime:this.state.estimatedTime,
                 materialsNeeded:this.state.materialsNeeded}
                 console.log(updates)
-    this.props.context.data.updateCourse(this.state.courseId, updates,this.state.emailAddress,this.state.password)
-    .then(errors =>{
-      console.log(errors);
-      if(errors.length === 1 || errors.length === 2){
-        this.setState( ()=>{
-          return {errors}
-      });
-      }else{
-          this.props.history.push('/courses');
-          console.log(`the course was updated`);
-        }
-    })
+    this.props.context.data.CupdateCourse(updates,this.state.courseId, this.state.emailAddress,this.state.password)
+    // .then(errors =>{
+    //   console.log(errors);
+    //   if(errors.length === 1 || errors.length === 2){
+    //     this.setState( ()=>{
+    //       return {errors}
+    //   });
+    //    return <Redirect to="/notFound"/>
+    //   }else{
+    //       this.props.history.push('/courses');
+    //       console.log(`the course was updated`);
+    //     }
+    // })
     
-    .catch(err => {
-      console.log(err);
-      this.props.history.push('/error');
-    });
+    // .catch(err => {
+    //   console.log(err);
+    //   this.props.history.push('/error');
+    // });
     
   }catch(err){
     console.log(err)

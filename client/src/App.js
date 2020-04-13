@@ -16,6 +16,10 @@ import UserSignOut from './components/UserSignOut.js';
 import CreateCourse from './components/CreateCourse.js';
 import UserSignUp from './components/UserSignUp.js';
 import PrivateRoute from './components/PrivateRoute.js'
+import NotFound from './components/Notfound.js'
+import Forbidden from './components/Forbidden.js'
+import UnhanddledError from './components/UnhanddledError.js'
+
 
 
 
@@ -57,6 +61,10 @@ class  App extends Component {
         <Route   exact path="/signin-UserSignIn" component={SignInContext}/>
         <Route   exact path="/signup-UserSignUp"  component={SignUpContext}/>
         <Route  exact path="/signout-UserSignOut"component={SignOutContext}/>
+        <Route  exact path="/forbidden"   component={Forbidden}/>
+        <Route exact path="/UnhanddledError" component={UnhanddledError}/>
+        <Route  path="/notFound" component={NotFound}/>
+        <Route   component={NotFound}/>
         </Switch>
          
       

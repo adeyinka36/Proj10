@@ -1,6 +1,8 @@
 import React, {Component} from 'react'
 import { render } from 'react-dom';
 import Cookies from 'js-cookie';
+import XMLHttpRequest from 'xmlhttprequest';
+import {axios} from 'axios'
 
 export default class Data extends Component{
 
@@ -44,18 +46,14 @@ deleteCourse(val,emailAddress,password){
     }
 
      signIn  =(emailAddress,password)=>{
-        const user={emailAddress,password}
-         console.log(this.state.emailAddress)
         // let encodedCrendtials=btoa(`${login}:${password}`)
-        fetch(`http://localhost:5000/api/users`,{
+       return  fetch(`http://localhost:5000/api/users`,{
              method:"GET",
              headers: new Headers({
             "Authorization": "Basic "+ btoa(emailAddress+":"+password)
           })
     })
-    this.setState({
-        authentication:user
-    })
+
    
 } 
 
@@ -70,6 +68,16 @@ createNewCourse(obj,emailAddress,password){
     })
 }
 
+
+CupdateCourse(data,id,emailAddress,password){
+    // 
+    axios.PUT(`http://localhost:5000/api/course${id}`,{
+        headers: {
+        "content-Type" : "application/json",
+        'Authorization': "Basic "+ btoa(emailAddress+":"+password)  
+      },user:data})
+.then(response=>console.log(response))
+}
 
 
 

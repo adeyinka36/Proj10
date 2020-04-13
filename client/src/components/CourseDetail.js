@@ -1,5 +1,5 @@
 import React , { Component} from 'react';
-import {Link} from 'react-router-dom';
+import {Link,Redirect} from 'react-router-dom';
 import ReactMarkdown from 'react-markdown';
 import Cookies from 'js-cookie';
 
@@ -26,7 +26,9 @@ deleteCourse(e){
       
      
       this.props.context.data.getCourseDetail(this.props.match.params.id)
-      .then(response=>response.json())
+      .then(response=>{if(response.status!==200){ return <Redirect to="/notFound"/>}
+      else{
+       return response.json()}})
       .then(res=>{
         
         this.setState({course:res,
@@ -36,7 +38,7 @@ deleteCourse(e){
                       // password:Cookies.getJSON("authenticatedUser").password
         })})
        
-      .then(res=>console.log(this.state.course.id))
+    
      .catch(err=>console.log(`there was this error ${err}`))
     }
     render()
