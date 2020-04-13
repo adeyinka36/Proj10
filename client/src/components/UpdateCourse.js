@@ -56,7 +56,7 @@ class UpdateCourse extends Component{
                   estimatedTime:this.state.estimatedTime,
                 materialsNeeded:this.state.materialsNeeded}
                 console.log(updates)
-    this.props.context.data.CupdateCourse(updates,this.state.courseId, this.state.emailAddress,this.state.password)
+    this.props.context.data.updateCourse(updates,this.state.courseId, this.state.emailAddress,this.state.password)
     // .then(errors =>{
     //   console.log(errors);
     //   if(errors.length === 1 || errors.length === 2){
