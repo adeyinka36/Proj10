@@ -1,13 +1,11 @@
 import React from 'react';
-import { Redirect } from 'react-router-dom';
+
 
 export default (props) => {
   
   props.context.data.signOut()
-
-
-  return (
-      
-     <Redirect to="/courses" />
-  );
+//  return props.history.push("/courses")
+return(
+    <h1>You are signed Out</h1>
+)
 }

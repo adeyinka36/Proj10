@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
-import {Link,Redirect}from 'react-router-dom';
-import { render } from 'react-dom';
+import {Link}from 'react-router-dom';
 import Cookies from 'js-cookie';
 
 const details= React.createContext();
@@ -38,7 +37,7 @@ const signIn= this.props.context.data.signIn
 
 signIn(emailAddress,password)
 
-.then(res=>{if(res.status==401){
+.then(res=>{if(res.status===401){
   console.log(res)
 
 }
@@ -48,6 +47,7 @@ else{
   console.log(`we are in, here are the authenticated details to be saved in sign in stat : ${res}`)
   Cookies.set('authenticatedUser', JSON.stringify(user), { expires: 1 });
   this.props.history.push(`/courses`)
+  this.props.context.data.makeAuthenticationTrue(user)
 console.log( Cookies.getJSON('authenticatedUser'))
 Cookies.set("userId",JSON.stringify(this.state.id))
   

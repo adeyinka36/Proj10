@@ -1,8 +1,5 @@
-import React, {Component} from 'react'
-import { render } from 'react-dom';
+import  {Component} from 'react'
 import Cookies from 'js-cookie';
-import XMLHttpRequest from 'xmlhttprequest';
-import {axios} from 'axios'
 
 export default class Data extends Component{
 
@@ -12,10 +9,12 @@ export default class Data extends Component{
         authentication:null,
           emailAddress:"",
           password:"",
-          val:true
+         
        }
      
     }
+
+    
 deleteCourse(val,emailAddress,password){
     return fetch(`http://localhost:5000/api/courses/${val}`,{
         method:"DELETE",
@@ -26,12 +25,12 @@ deleteCourse(val,emailAddress,password){
 }
    updateCourse(val,obj,emailAddress,password){
        return fetch(`http://localhost:5000/api/courses/${val}`,{
-        method:"put",
+        method:"PUT",
         headers:{
            'Content-Type': 'application/json',
            'Authorization': "Basic "+ btoa(emailAddress+":"+password)  
         },
-        body: JSON.stringify(obj)
+        body: obj
 })
    }
     getCourses(){
@@ -41,9 +40,9 @@ deleteCourse(val,emailAddress,password){
     getCourseDetail(val){
         return fetch(`http://localhost:5000/api/courses/${val}`)
     }
-    updateCourse(val){
-        return fetch(`http://localhost:5000/api/courses/${val}`)
-    }
+    // updateCourse(val){
+    //     return fetch(`http://localhost:5000/api/courses/${val}`)
+    // }
 
      signIn  =(emailAddress,password)=>{
         // let encodedCrendtials=btoa(`${login}:${password}`)
@@ -69,15 +68,15 @@ createNewCourse(obj,emailAddress,password){
 }
 
 
-CupdateCourse(data,id,emailAddress,password){
-    // 
-    axios.PUT(`http://localhost:5000/api/course${id}`,{
-        headers: {
-        "content-Type" : "application/json",
-        'Authorization': "Basic "+ btoa(emailAddress+":"+password)  
-      },user:data})
-.then(response=>console.log(response))
-}
+// CupdateCourse(data,id,emailAddress,password){
+//     // 
+//     axios.PUT(`http://localhost:5000/api/course${id}`,{
+//         headers: {
+//         "content-Type" : "application/json",
+//         'Authorization': "Basic "+ btoa(emailAddress+":"+password)  
+//       },user:data})
+// .then(response=>console.log(response))
+// }
 
 
 
@@ -93,7 +92,17 @@ createUser(obt){
 signOut(){
     Cookies.remove("authenticatedUser")
     Cookies.remove("authenticatedUserNum")
+//    setState doesnt work
+    this.setState({authentication:null})
 console.log("user signed out")
+}
+
+
+makeAuthenticationTrue(user){
+    console.log("settin state")
+this.setState({authentication:user})
+console.log("state has been set sucessfully ")
+console.log(this.state.authentication)
 }
 
 }

@@ -1,5 +1,5 @@
 import React ,{Component} from 'react'
-import { Link } from 'react-router-dom';
+import { Link} from 'react-router-dom';
 
 class UserSignUp extends Component{
     constructor(props){
@@ -39,21 +39,24 @@ submit=(e)=>{
     // create user 
     
     signUp(newUser)
-    .then(res=>{if(res.status==201)
-      {console.log("authenticated")}
+    .then(res=>{if(res.status===201)
+      {console.log("authenticated")
+        this.props.history.push("/courses")}
       else{
         if (res.length>=1){
           this.setState({
             errors:res
           })
+         return  console.log(`there was an error ${res.json()}`)
         }
-        console.log(`there was an error ${res.json()}`)
+       
       }
   })
 }
-  console.log("passwords dont match")
+  else if(password!==confirmPassword){
+    console.log("passwords dont match")
 }
-
+ }
 catch(err){
  console.log(`there was an error trying to create : ${err}`)
 }

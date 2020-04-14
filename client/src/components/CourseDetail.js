@@ -30,10 +30,11 @@ deleteCourse(e){
       else{
        return response.json()}})
       .then(res=>{
-        
+        console.log("yes")
+        console.log(res)
         this.setState({course:res,
                         id:res.id,
-                      userId:res.User.id,
+                      userId:res.User.id
                       // emailAddress:Cookies.getJSON('authenticatedUser').emailAddress,
                       // password:Cookies.getJSON("authenticatedUser").password
         })})
@@ -49,7 +50,7 @@ deleteCourse(e){
     let UserId= await ""+num
     userId=Number(userId);
     UserId=Number(UserId);
-    return userId==UserId
+    return userId===UserId
    }
      
 
@@ -63,7 +64,7 @@ return(
       <div>
         <div className="actions--bar">
           <div className="bounds">
-            <div className="grid-100">{ shouldUpdateRender?<span><Link className="button" to={`/courses/${this.state.course.id}/update`}>Update Course</Link><Link className="button" onClick={this.deleteCourse}>Delete Course</Link></span>:null}<Link
+            <div className="grid-100">{ shouldUpdateRender?<span><Link className="button" to={`/courses/${this.state.id}/update`}>Update Course</Link><button className="button" onClick={this.deleteCourse}>Delete Course</button></span>:null}<Link
                 className="button button-secondary" to="/courses">Return to List</Link></div>
           </div>
         </div>

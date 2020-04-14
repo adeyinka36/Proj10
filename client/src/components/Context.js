@@ -1,7 +1,5 @@
 import React, {Component} from 'react'
-import Link from 'react-router-dom'
-import Data from './Data.js';
-import Cookies from 'js-cookie';
+import Data from './Data.js'
 
 const courseContext= React.createContext();
 

@@ -1,6 +1,5 @@
 import React, { Component} from 'react';
-import {Link, Redirect} from 'react-router-dom';
-import ReactMarkdown from 'react-markdown';
+import {Link} from 'react-router-dom';
 import Cookies from 'js-cookie';
 
 class UpdateCourse extends Component{
@@ -56,7 +55,7 @@ class UpdateCourse extends Component{
                   estimatedTime:this.state.estimatedTime,
                 materialsNeeded:this.state.materialsNeeded}
                 console.log(updates)
-    this.props.context.data.updateCourse(updates,this.state.courseId, this.state.emailAddress,this.state.password)
+    this.props.context.data.updateCourse(this.state.courseId,updates, this.state.emailAddress,this.state.password)
     // .then(errors =>{
     //   console.log(errors);
     //   if(errors.length === 1 || errors.length === 2){

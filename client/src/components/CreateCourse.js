@@ -1,5 +1,4 @@
 import React , { Component } from  'react';
-import {Link} from 'react-router-dom';
 import Cookies from 'js-cookie';
 
 class CreateCourse extends Component{
@@ -58,7 +57,7 @@ this.props.context.data.createNewCourse(course,emailAddress,password)
 }
 
    render(){
-     let error=this.state.errors
+     let error=this.state.error
     
   
   
