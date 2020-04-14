@@ -6,7 +6,7 @@ export default class Data extends Component{
     constructor(props){
        super(props);
        this.state={
-        authentication:null,
+        authentication:true,
           emailAddress:"",
           password:"",
          
@@ -15,8 +15,8 @@ export default class Data extends Component{
     }
 
     
-deleteCourse(val,emailAddress,password){
-    return fetch(`http://localhost:5000/api/courses/${val}`,{
+deleteCourse(emailAddress,password){
+    return fetch(`http://localhost:5000/api/courses/16`,{
         method:"DELETE",
         headers: new Headers({
        "Authorization": "Basic "+ btoa(emailAddress+":"+password)

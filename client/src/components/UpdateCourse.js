@@ -2,6 +2,7 @@ import React, { Component} from 'react';
 import {Link} from 'react-router-dom';
 import Cookies from 'js-cookie';
 
+
 class UpdateCourse extends Component{
     constructor(props){
         super(props);
@@ -36,7 +37,7 @@ class UpdateCourse extends Component{
         response.json())
     
       .then(res=>{this.setState({course:res,courseId:res.id,emailAddress:Cookies.getJSON('authenticatedUser').emailAddress,
-    password:Cookies.getJSON('authenticatedUser').password})
+      password:Cookies.getJSON("authenticatedUser").password})
     console.log("yes")})
     // redirect to forbidden if id stored in cookies isnt the same as the user id return for this course using the ".then" below
     // .then(res=>)

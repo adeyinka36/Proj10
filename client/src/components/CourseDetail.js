@@ -16,7 +16,7 @@ class CourseDetail extends Component{
        password:null
      }
     }
-deleteCourse(e){
+deleteCourse=(e)=>{
   e.preventDefault()
   this.props.context.data.deleteCourse(this.state.id,this.state.emailAddress,this.state.password)
 }
@@ -34,9 +34,9 @@ deleteCourse(e){
         console.log(res)
         this.setState({course:res,
                         id:res.id,
-                      userId:res.User.id
-                      // emailAddress:Cookies.getJSON('authenticatedUser').emailAddress,
-                      // password:Cookies.getJSON("authenticatedUser").password
+                      userId:res.User.id,
+                      emailAddress:Cookies.getJSON('authenticatedUser').emailAddress,
+                      password:Cookies.getJSON("authenticatedUser").password
         })})
        
     
