@@ -27,7 +27,7 @@ class UpdateCourse extends Component{
         estimatedTime:document.getElementById('estimatedTime').value,
         materialsNeeded:document.getElementById('materialsNeeded').value
       })
-      console.log(this.state.course.title)
+     
     }
     componentDidMount(){
       console.log("yes wroking so far")
@@ -109,7 +109,7 @@ class UpdateCourse extends Component{
                 <p>{`${this.state.course.User.firstName} ${this.state.course.User.lastName}`}</p>
               </div>
               <div className="course--description">
-                <div><textarea id="description" name="description" className=""  onChange={this.change}>{this.state.course.description}</textarea></div>
+                <div><textarea id="description" name="description" className=""  defaultValue={this.state.course.description} onChange={this.change}></textarea></div>
               </div>
             </div>
             <div className="grid-25 grid-right">
@@ -122,7 +122,7 @@ class UpdateCourse extends Component{
                   </li>
                   <li className="course--stats--list--item">
                     <h4>Materials Needed</h4>
-                    <div><textarea id="materialsNeeded" name="materialsNeeded" className=""  onChange={this.change}>{this.state.course.materialsNeeded}
+                    <div><textarea id="materialsNeeded" name="materialsNeeded" className=""  defaultValue={this.state.course.materialsNeeded} onChange={this.change}>
 </textarea></div>
                   </li>
                 </ul>
