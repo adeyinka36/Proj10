@@ -7,13 +7,13 @@ export default class Data extends Component{
        super(props);
        this.state={
         authentication:true,
-          emailAddress:"",
+          emailAddress:"jkll",
           password:"",
          
        }
      
     }
-
+_isMounted=false
     
 deleteCourse(emailAddress,password){
     return fetch(`http://localhost:5000/api/courses/16`,{
@@ -30,7 +30,7 @@ deleteCourse(emailAddress,password){
            'Content-Type': 'application/json',
            'Authorization': "Basic "+ btoa(emailAddress+":"+password)  
         },
-        body: obj
+        body: JSON.stringify(obj)
 })
    }
     getCourses(){
@@ -45,7 +45,8 @@ deleteCourse(emailAddress,password){
     // }
 
      signIn  =(emailAddress,password)=>{
-        // let encodedCrendtials=btoa(`${login}:${password}`)
+        // let encodedCrendtials=btoa(`${emailAddress}:${password}`)
+        // let unmounted = false
        return  fetch(`http://localhost:5000/api/users`,{
              method:"GET",
              headers: new Headers({
@@ -53,9 +54,13 @@ deleteCourse(emailAddress,password){
           })
     })
 
-   
-} 
-
+}
+componentWillUnmount(){
+    this._isMounted=false
+}
+componentDidMount(){
+    this._isMounted=true
+}
 createNewCourse(obj,emailAddress,password){
     return fetch(`http://localhost:5000/api/courses/`,{
              method:"POST",
@@ -100,9 +105,9 @@ console.log("user signed out")
 
 makeAuthenticationTrue(user){
     console.log("settin state")
-this.setState({authentication:user})
+if(this._isMounted){this.setState({authentication:user})}
 console.log("state has been set sucessfully ")
-console.log(this.state.authentication)
+console.log(this.state.emailAddress)
 }
 
 }

@@ -60,7 +60,7 @@ this.props.context.data.createNewCourse(course,emailAddress,password)
      let error=this.state.error
     
   
-  
+
        return(
         
         <div className="bounds course--detail">
@@ -76,6 +76,7 @@ this.props.context.data.createNewCourse(course,emailAddress,password)
             </div>
           </div>
           </div>:null}
+          
             <form>
               <div className="grid-66">
                <div className="course--header">

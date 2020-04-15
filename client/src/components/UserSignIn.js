@@ -47,7 +47,7 @@ else{
   console.log(`we are in, here are the authenticated details to be saved in sign in stat : ${res}`)
   Cookies.set('authenticatedUser', JSON.stringify(user), { expires: 1 });
   this.props.history.push(`/courses`)
-  this.props.context.data.makeAuthenticationTrue(user)
+   this.props.context.data.makeAuthenticationTrue(user)
 console.log( Cookies.getJSON('authenticatedUser'))
 Cookies.set("userId",JSON.stringify(this.state.id))
   
