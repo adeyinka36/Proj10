@@ -1,11 +1,17 @@
 import React from 'react';
+import {Redirect,Link} from 'react-router-dom'
+import { HeaderContext } from '../App';
 
 
-export default (props) => {
+
+export default  (props) => {
   
-  props.context.data.signOut()
-//  return props.history.push("/courses")
+      props.context.signOut()
+
 return(
-    <h1>You are signed Out</h1>
+    <div>
+    
+    <Redirect to="/courses"/>
+    </div>
 )
 }

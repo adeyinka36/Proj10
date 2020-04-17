@@ -763,3 +763,13 @@ input:focus {
 nav{
   padding-top:10px;
 }
+
+.error{
+  text-align: center;
+  
+}
+.return-home{
+  margin:5px;
+  padding:3px;
+  
+}

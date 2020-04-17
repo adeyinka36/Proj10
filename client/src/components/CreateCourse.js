@@ -1,14 +1,17 @@
 import React , { Component } from  'react';
 import Cookies from 'js-cookie';
+import {Link,Redirect} from 'react-router-dom'
+import {HeaderContext} from '../App.js'
+import Header from './Header.js';
 
 class CreateCourse extends Component{
     constructor(props){
         super(props);
         this.state={
-          title:"",
-          description:"",
-          estimatedTime:"",
-          materialsNeeded:"",
+          title:null,
+          description:null,
+          estimatedTime:null,
+          materialsNeeded:null,
           error:[]
         }
     }
@@ -22,31 +25,35 @@ class CreateCourse extends Component{
       })
     }
   
-createCourse=(e)=>{
+  
+createCourse= async(e)=>{
   
   e.preventDefault()
-  document.getElementById('title').placeholder=""
-  document.getElementById('description').placeholder=""
-  document.getElementById('estimatedTime').placeholder=""
-  document.getElementById('materialsNeeded').placeholder=""
-
-  console.log(this.state.title)
-   const {password} =Cookies.getJSON('authenticatedUser');
-   const {emailAddress}=Cookies.getJSON('authenticatedUser');
+  
+ 
+   
   const title=this.state.title
   const description=this.state.description
   const course={title:title,description:description}
-this.props.context.data.createNewCourse(course,emailAddress,password)
+this.props.context.data.createNewCourse(course,this.props.context.authentication.emailAddress,this.props.context.authentication.password)
 .then(errors =>{
-  console.log(errors);
-  if(errors.length === 1 || errors.length === 2){
-    this.setState( ()=>{
-      return {errors}
-  });
-  }else{
-      this.props.history.push('/courses');
-      console.log(`the course was created`);
-    }
+  if(errors.status===201){
+     this.props.history.push("/courses")
+  return
+  }
+  else if(errors.status===500){return}
+  else{console.log(errors)
+  return errors.json()}})
+
+  .then(errors =>{
+    
+    if(errors){
+      this.setState({ 
+       error: errors}
+    )}
+else{
+  return console.log("coure has been added")
+}
 })
 
 .catch(err => {
@@ -58,20 +65,26 @@ this.props.context.data.createNewCourse(course,emailAddress,password)
 
    render(){
      let error=this.state.error
-    
+     let errList
+      if (error.length){
+     errList= error.map((error,i)=>{return(
+     <li key={i}>{error}</li>
+     )})
+      }
   
 
        return(
-        
+         <div>
+        <HeaderContext/>
         <div className="bounds course--detail">
           <h1>Create Course</h1>
-          {error?<div>
+          {error.length?<div>
             {/* vlidation errors/error */}
             <div>
-            <h2 class="validation--errors--label">Validation errors</h2>
-            <div class="validation-errors">
+            <h2 className="validation--errors--label">Validation errors</h2>
+            <div className="validation-errors">
               <ul>
-                {error.map((error,i)=>`<li key={i}>${error}</li>`)}
+                {errList}
               </ul>
             </div>
           </div>
@@ -104,8 +117,9 @@ this.props.context.data.createNewCourse(course,emailAddress,password)
                   </ul>
                 </div>
               </div>
-              <div className="grid-100 pad-bottom"><button className="button"  onClick={this.createCourse}>Create Course</button><button className="button button-secondary" >Cancel</button></div>
+              <div className="grid-100 pad-bottom"><button className="button"  onClick={this.createCourse}>Create Course</button><Link to="/"><button className="button button-secondary" >Cancel</button></Link></div>
             </form>
+            </div>
             </div>
             
           

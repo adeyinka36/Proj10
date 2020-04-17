@@ -1,8 +1,12 @@
 import React from 'react'
+import {HeaderContext} from '../App.js'
 
 const UnhanddledError=()=>{
     return(
-        <div>An unexpected error has occured</div>
+        <div>
+        <HeaderContext/>
+        <div className="error">An unexpected error has occured</div>
+        </div>
     )
 }
 

@@ -5,13 +5,14 @@ import React from 'react'
 const   PrivateRoute=  ({component:Component,...rest})=>{
 
  
-    console.log("here")
+    
    return(
        <UserConsumer>
            {context=>(
                <Route
                {...rest}
-               render={props=> context.data.state.authentication? (<Component {...props}/>):(<Redirect to="/signup-UserSignUp"/>)}/>
+               render={props=> context.authentication? (<Component {...props}/>):(<
+                   Redirect to={{pathname:"/signin-UserSignIn",state:{from:props.location}}}/>)}/>
            )}
        </UserConsumer>
    )

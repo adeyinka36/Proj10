@@ -1,10 +1,9 @@
 import React, {Component} from 'react';
 import {Link}from 'react-router-dom';
 import Cookies from 'js-cookie';
+import {HeaderContext} from '../App.js'
 
-const details= React.createContext();
-export const Provider2=details.Provider;
-export const Consumer2=details.Consumer;
+
 
 
 class UserSignIn extends Component{
@@ -12,9 +11,11 @@ class UserSignIn extends Component{
         super(props);
         this.state={
           authenticated:null,
-         password:"",
-         emailAddress:"",
-         id:""
+         passwordn:null,
+         emailAddress:null,
+         id:"",
+         firstname:null,
+         lastname:null
         }
     }
 
@@ -27,8 +28,10 @@ change=(e)=>{
   })
 }
 
-submit= (event)=>{
+submit= async (event)=>{
 event.preventDefault();
+const { from } = this.props.location.state || { from: { pathname: '/courses' } }
+
 
  try{
 const emailAddress= this.state.emailAddress
@@ -38,23 +41,28 @@ const signIn= this.props.context.data.signIn
 signIn(emailAddress,password)
 
 .then(res=>{if(res.status===401){
-  console.log(res)
-
+  this.props.history.push("/error")
+  return
+  
+  
 }
+else if(res.status===500){return this.props.history.push("/NotFound")}
 else{
-  const user={emailAddress:this.state.emailAddress,password:this.state.password}
-  this.setState({authenticated:user,id:res.id})
-  console.log(`we are in, here are the authenticated details to be saved in sign in stat : ${res}`)
-  Cookies.set('authenticatedUser', JSON.stringify(user), { expires: 1 });
-  this.props.history.push(`/courses`)
-   this.props.context.data.makeAuthenticationTrue(user)
-console.log( Cookies.getJSON('authenticatedUser'))
-Cookies.set("userId",JSON.stringify(this.state.id))
   
-  
-  
-   
+  return res.json()
 }
+})
+.then(res=>{
+  console.log("works")
+  res.password=this.state.password
+  let user=res
+  this.props.context.make(user)
+
+  this.setState({authenticated:user,id:res.id,firstname:res.firstName,lastname:res.lastName})
+  Cookies.set('authenticatedUser', JSON.stringify(user), { expires: 1 });
+
+Cookies.set("userId",JSON.stringify(this.state.id))
+this.props.history.push(from)
 
 })
 
@@ -62,6 +70,8 @@ Cookies.set("userId",JSON.stringify(this.state.id))
 .catch(err=>console.log(`there was an error siginin in :${err}`))
 }catch(err){
 console.log(`this is the try catch error : ${err}`)
+}finally{
+  // this.props.context.data.checkAuthentication()
 }
 
 
@@ -69,7 +79,7 @@ console.log(`this is the try catch error : ${err}`)
     render(){
       return(
        <div>
-          
+          <HeaderContext/>
             <div className="bounds">
               <div className="grid-33 centered signin">
                 <h1>Sign In</h1>

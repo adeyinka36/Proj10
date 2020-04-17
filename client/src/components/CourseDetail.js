@@ -1,7 +1,8 @@
 import React , { Component} from 'react';
-import {Link,Redirect} from 'react-router-dom';
+import {Link} from 'react-router-dom';
 import ReactMarkdown from 'react-markdown';
 import Cookies from 'js-cookie';
+import {HeaderContext} from '../App.js'
 
 
 
@@ -16,31 +17,47 @@ class CourseDetail extends Component{
        password:null
      }
     }
-deleteCourse=(e)=>{
+deleteCourse=async(e)=>{
   e.preventDefault()
-  this.props.context.data.deleteCourse(this.state.id,this.state.emailAddress,this.state.password)
+  await this.props.context.data.deleteCourse(this.state.id,this.props.context.authentication.emailAddress,this.props.context.authentication.password)
+.then(res=>{if(res.status===204){
+  this.props.history.push("/courses")
+  
+}
+else if(res.status===400){
+  this.props.history.push("/Forbidden")
+  return
+}
+else{
+  this.props.history.push("/error")
+  return
+}})
+  
 }
 
     componentDidMount(){
-      console.log("hello")
+    
       
      
       this.props.context.data.getCourseDetail(this.props.match.params.id)
-      .then(response=>{if(response.status!==200){ return <Redirect to="/notFound"/>}
+      .then(response=>{if(response.status!==200){ return this.props.history.push("/NotFound")}
       else{
-       return response.json()}})
+       return response.json()
+      }})
       .then(res=>{
-        console.log("yes")
-        console.log(res)
+        
         this.setState({course:res,
                         id:res.id,
                       userId:res.User.id,
-                      emailAddress:Cookies.getJSON('authenticatedUser').emailAddress,
-                      password:Cookies.getJSON("authenticatedUser").password
+                      
         })})
+    
        
     
-     .catch(err=>console.log(`there was this error ${err}`))
+     .catch(err=>{
+      this.props.history.push("/Forbidden")
+      
+       return})
     }
     render()
     {
@@ -59,7 +76,7 @@ let shouldUpdateRender = cal()
 if(this.state.course){
 return(
     <div>
-    
+    <HeaderContext/>
       
       <div>
         <div className="actions--bar">
@@ -103,7 +120,7 @@ return(
   
     return(
       <div>
-    
+         Loading..
       </div>
     )
   

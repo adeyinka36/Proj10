@@ -1,5 +1,6 @@
 import React ,{Component,Fragment} from 'react';
 import { Link } from 'react-router-dom';
+import {HeaderContext} from '../App.js'
 
 
 
@@ -13,7 +14,7 @@ class Courses extends Component{
    
     
     componentDidMount=()=>{
-      console.log(this.props.context.data)
+      
       this.props.context.data.getCourses().then(response=>response.json())
       .then(res=>this.setState({courses:res}))
       .catch(err=>console.log(`here is the error : ${err}`))
@@ -41,6 +42,7 @@ class Courses extends Component{
         });
         return(
           <Fragment>
+          <HeaderContext/>
           <div className="bounds">
               {content}
               <div className="grid-33">
@@ -69,7 +71,7 @@ class Courses extends Component{
       }
       return(
         <div>
-        {content.title}
+        Loading...
         </div>
       )
     }

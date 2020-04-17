@@ -1,5 +1,6 @@
 import React ,{Component} from 'react'
 import { Link} from 'react-router-dom';
+import {HeaderContext} from '../App.js'
 
 class UserSignUp extends Component{
     constructor(props){
@@ -40,18 +41,36 @@ submit=(e)=>{
     
     signUp(newUser)
     .then(res=>{if(res.status===201)
-      {console.log("authenticated")
-        this.props.history.push("/courses")}
+      {
+        return this.props.history.push("/courses")}
+        else if(res.status===500){ this.props.history.push("/NotFound");return}
       else{
-        if (res.length>=1){
-          this.setState({
-            errors:res
-          })
-         return  console.log(`there was an error ${res.json()}`)
-        }
-       
+        return res.json()
       }
-  })
+    })
+    .then(errors =>{
+     
+      if(errors){
+        
+        if(typeof errors===Array){
+          
+        let errorMessages=errors.map(err=>err.message)
+        
+        this.setState({ 
+          errors:errorMessages}
+      );
+        }else {
+          
+          let errorMessages=errors.message
+          this.setState({
+            errors:[errorMessages]
+          })
+        }
+
+      }
+    })
+        
+  
 }
   else if(password!==confirmPassword){
     console.log("passwords dont match")
@@ -62,31 +81,40 @@ catch(err){
 }
 }    
     render(){
-      let error=false
-     if(this.state.errors.length>=1){
-       error=true
-     }
-     
-        return(
-   
+    
       
+      let error=  this.state.errors
+     let errList
+      if (error.length){
+        
+     errList= error.map((error,i)=>{return(
+     <li key={i}>{error}</li>
+     )})
+      }
+      else if(typeof error===Object){
+        errList=error.message
+      }
+      
+        return(
+      <div>
+      <HeaderContext/>
       <div className="bounds">
         <div className="grid-33 centered signin">
           <h1>Sign Up</h1>
           <h1>Create Course</h1>
-          {error?<div>
+          {error.length?<div>
             {/* vlidation errors/error */}
             <div>
-            <h2 class="validation--errors--label">Validation errors</h2>
-            <div class="validation-errors">
+            <h2 className="validation--errors--label">Validation errors</h2>
+            <div className="validation-errors">
               <ul>
-                {error.map((error,i)=>`<li key={i}>${error}</li>`)}
+              {errList}
               </ul>
             </div>
           </div>
           </div>:null}
           <div>
-
+        
             <form>
               <div><input id="firstName" name="firstName" type="text" className="" placeholder="First Name" onChange={this.change}/></div>
               <div><input id="lastName" name="lastName" type="text" className="" placeholder="Last Name" onChange={this.change}/></div>
@@ -100,6 +128,7 @@ catch(err){
           <p>&nbsp;</p>
           <p>Already have a user account? <Link to="/signin-UserSignIn">Click here</Link> to sign in!</p>
         </div>
+      </div>
       </div>
     
         )

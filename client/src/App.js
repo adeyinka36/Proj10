@@ -30,6 +30,7 @@ const SignInContext=withContext(UserSignIn)
 const SignOutContext=withContext(SignOut)
 const CreateCourseContext=withContext(CreateCourse)
 const SignUpContext=withContext(UserSignUp)
+export const HeaderContext=withContext(Header)
 
 class  App extends Component {
    constructor(props){
@@ -48,21 +49,21 @@ class  App extends Component {
     <div className="App">
     <BrowserRouter>
       
-        <Header/>
+        
         <Switch>
-        <Route   exact path="/" component={CoursesWithContext}/>
+        
         <Route   exact path="/courses" component={CoursesWithContext}/>
         <PrivateRoute  exact path="/courses/create" component={CreateCourseContext}/>
         
-        <PrivateRoute  exact path="/courses/:id/update" component={CourseUpdateContext}/>
+        <PrivateRoute   path="/courses/:id/update" component={CourseUpdateContext}/>
         <Route   exact path="/courses/:id" component={CourseDetailContext}/>
         <Route   exact path="/signin-UserSignIn" component={SignInContext}/>
         <Route   exact path="/signup-UserSignUp"  component={SignUpContext}/>
         <Route  exact path="/signout-UserSignOut" component={SignOutContext}/>
-        <Route  exact path="/Forbidden"   render={Forbidden.render}/>
+        <Route  exact path="/Forbidden"   component={Forbidden}/>
         <Route exact path="/UnhanddledError" component={UnhanddledError}/>
-        <Route  path="/notFound" render={NotFound.render}/>
-        <Route  render={NotFound.render}/>
+        <Route  path="/notFound" component={NotFound}/>
+        <Route  component={NotFound}/>
         </Switch>
          
       
@@ -73,4 +74,6 @@ class  App extends Component {
   );
 }
 }
+
 export default App;
+

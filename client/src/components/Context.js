@@ -1,5 +1,7 @@
 import React, {Component} from 'react'
 import Data from './Data.js'
+import Cookies from 'js-cookie';
+import {Redirect} from 'react-router-dom'
 
 const courseContext= React.createContext();
 
@@ -13,15 +15,32 @@ export class Provider extends Component{
         super();
         this.data=new Data()
         this.state={
-            authentication:null
+            authentication:Cookies.getJSON('authenticatedUser')||null
         }
         }
+make=(user)=>{
+          this.setState({authentication:user})
+          console.log(this.state.authentication)
+          console.log("wow")
+        }   
+signOut=()=>{
+  console.log("signin out")
+           Cookies.remove("authenticatedUser")
+           Cookies.remove("authenticatedUserNum")
+      //    setState doesnt
+      this.setState({authentication:null})
     
-  
+    }
+
+      
 render(){
-    
+  const signOut=this.signOut
+  const make=this.make
+let  authentication=this.state.authentication
     const value ={
-         authentication:this.state.authentication,
+          make,
+          signOut,
+         authentication,
         data:this.data
           }
 

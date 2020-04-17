@@ -1,21 +1,22 @@
 import React, { Component} from 'react';
 import {Link} from 'react-router-dom';
 import Cookies from 'js-cookie';
+import {HeaderContext} from '../App.js'
 
 
 class UpdateCourse extends Component{
     constructor(props){
         super(props);
         this.state={
-          course:"",
-          courseId:"",
+          course:null,
+          courseId:null,
           emailAddress:"",
           password:"",
-          title:"",
-          description:"",
+          title:null,
+          description:null,
           estimatedTime:"",
           materialsNeeded:"",
-          error:[]
+          errors:[]
         }
     }
 
@@ -29,16 +30,20 @@ class UpdateCourse extends Component{
       })
      
     }
+   
     componentDidMount(){
-      console.log("yes wroking so far")
+     
 
       this.props.context.data.getCourseDetail(this.props.match.params.id)
-      .then(response=>
-        response.json())
+      .then(response=>{if(response.status!==200){
+          this.props.history.push("/NotFound");return}
+         else if(response.status==500){ this.props.push("/NotFound");return}
+         else{
+       return response.json()}})
     
       .then(res=>{this.setState({course:res,courseId:res.id,emailAddress:Cookies.getJSON('authenticatedUser').emailAddress,
       password:Cookies.getJSON("authenticatedUser").password})
-    console.log("yes")})
+    })
     // redirect to forbidden if id stored in cookies isnt the same as the user id return for this course using the ".then" below
     // .then(res=>)
       
@@ -47,33 +52,48 @@ class UpdateCourse extends Component{
 
     update=(e)=>{
     e.preventDefault()
-    this.setState({title:"x"})
-    console.log(this.state.title)
+  
     try{
     
  let updates={title:this.state.title,
                    description:this.state.description,
                   estimatedTime:this.state.estimatedTime,
                 materialsNeeded:this.state.materialsNeeded}
-                console.log(updates)
-    this.props.context.data.updateCourse(this.state.courseId,updates, this.state.emailAddress,this.state.password)
-    // .then(errors =>{
-    //   console.log(errors);
-    //   if(errors.length === 1 || errors.length === 2){
-    //     this.setState( ()=>{
-    //       return {errors}
-    //   });
-    //    return <Redirect to="/notFound"/>
-    //   }else{
-    //       this.props.history.push('/courses');
-    //       console.log(`the course was updated`);
-    //     }
-    // })
+                
+    this.props.context.data.updateCourse(this.state.courseId,updates, this.props.context.authentication.emailAddress,this.props.context.authentication.password)
+    .then(err=>{if(err.status!==204){ 
+      return this.props.history.push("/Forbid")}
+      else{
+        return this.props.history.push("/courses")
+      }
+    })
+   
+    .then(errors =>{
     
-    // .catch(err => {
-    //   console.log(err);
-    //   this.props.history.push('/error');
-    // });
+      if(errors){
+      
+        if(typeof errors===Array){
+      
+        let errorMessages=errors.map(err=>err.message)
+        console.log(errorMessages)
+        this.setState({ 
+          errors:errorMessages}
+      );
+        }else {
+      
+          let errorMessages=errors.message
+          this.setState({
+            errors:[errorMessages]
+          })
+        }
+
+      }
+    })
+    
+    .catch(err => {
+  
+      this.props.history.push('/error');
+    });
     
   }catch(err){
     console.log(err)
@@ -81,21 +101,35 @@ class UpdateCourse extends Component{
 
     }
     render(){
+      console.log(this.state.errors)
       let error=  this.state.errors
+     let errList
+      if (error.length){
+      
+     errList= error.map((error,i)=>{return(
+     <li key={i}>{error}</li>
+     )})
+      }
+      else if(typeof error===Object){
+        errList=error.message
+      }
+      
+
       if(this.state.course){
         return(
     <div>
+    <HeaderContext/> 
       
       <div className="bounds course--detail">
         <h1>Update Course</h1>
         <div>
-        {error?<div>
+        {error.length?<div>
             {/* vlidation errors/error */}
             <div>
-            <h2 class="validation--errors--label">Validation errors</h2>
-            <div class="validation-errors">
+            <h2 className="validation--errors--label">Validation errors</h2>
+            <div className="validation-errors">
               <ul>
-                {error.map((error,i)=>`<li key={i}>${error}</li>`)}
+                {errList}
               </ul>
             </div>
           </div>
@@ -139,7 +173,7 @@ class UpdateCourse extends Component{
         )
       }
      return(
-       <div></div>
+       <div>Loading...</div>
      )
   }
  

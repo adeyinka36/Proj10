@@ -1,22 +1,23 @@
-import  {Component} from 'react'
+import React, {Component} from 'react'
 import Cookies from 'js-cookie';
+import { Redirect } from 'react-router-dom';
 
 export default class Data extends Component{
 
     constructor(props){
        super(props);
        this.state={
-        authentication:true,
-          emailAddress:"jkll",
+        authentication:null,
+          emailAddress:"",
           password:"",
          
        }
      
     }
-_isMounted=false
+
     
-deleteCourse(emailAddress,password){
-    return fetch(`http://localhost:5000/api/courses/16`,{
+deleteCourse(id,emailAddress,password){
+    return fetch(`http://localhost:5000/api/courses/${id}`,{
         method:"DELETE",
         headers: new Headers({
        "Authorization": "Basic "+ btoa(emailAddress+":"+password)
@@ -44,23 +45,20 @@ deleteCourse(emailAddress,password){
     //     return fetch(`http://localhost:5000/api/courses/${val}`)
     // }
 
-     signIn  =(emailAddress,password)=>{
+     signIn  =async (emailAddress,password)=>{
+         this._isMounted=true
         // let encodedCrendtials=btoa(`${emailAddress}:${password}`)
         // let unmounted = false
-       return  fetch(`http://localhost:5000/api/users`,{
+         return fetch(`http://localhost:5000/api/users`,{
              method:"GET",
              headers: new Headers({
             "Authorization": "Basic "+ btoa(emailAddress+":"+password)
           })
     })
+ 
+}
 
-}
-componentWillUnmount(){
-    this._isMounted=false
-}
-componentDidMount(){
-    this._isMounted=true
-}
+
 createNewCourse(obj,emailAddress,password){
     return fetch(`http://localhost:5000/api/courses/`,{
              method:"POST",
@@ -94,20 +92,9 @@ createUser(obt){
   
 }
 
-signOut(){
-    Cookies.remove("authenticatedUser")
-    Cookies.remove("authenticatedUserNum")
-//    setState doesnt work
-    this.setState({authentication:null})
-console.log("user signed out")
-}
 
 
-makeAuthenticationTrue(user){
-    console.log("settin state")
-if(this._isMounted){this.setState({authentication:user})}
-console.log("state has been set sucessfully ")
-console.log(this.state.emailAddress)
-}
+
+
 
 }
