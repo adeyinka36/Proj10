@@ -51,7 +51,7 @@ class  App extends Component {
       
         
         <Switch>
-        
+        <Route exact path="/" component={CoursesWithContext}/>
         <Route   exact path="/courses" component={CoursesWithContext}/>
         <PrivateRoute  exact path="/courses/create" component={CreateCourseContext}/>
         

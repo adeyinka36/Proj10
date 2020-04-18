@@ -8,13 +8,13 @@ import {HeaderContext} from '../App.js'
 
 class CourseDetail extends Component{
     constructor(props){
-        super(props)
+        super(props);
      this.state={
-       course:null,
-       id:null,
-       userId:null,
-       emailAddress:null,
-       password:null
+       course:"",
+       id:"",
+       userId:"",
+       emailAddress:"",
+       password:""
      }
     }
 deleteCourse=async(e)=>{
@@ -35,7 +35,7 @@ else{
   
 }
 
-    componentDidMount(){
+    componentDidMount=()=>{
     
       
      
@@ -45,12 +45,13 @@ else{
        return response.json()
       }})
       .then(res=>{
-        
+        console.log(res)
         this.setState({course:res,
                         id:res.id,
-                      userId:res.User.id,
+                      userId:res.User.id
                       
         })})
+
     
        
     
@@ -61,17 +62,28 @@ else{
     }
     render()
     {
-    let num= this.state.userId
-   async function cal (){
-    let userId= await JSON.stringify(Cookies.getJSON('authenticatedUserNum'));
-    let UserId= await ""+num
-    userId=Number(userId);
-    UserId=Number(UserId);
-    return userId===UserId
-   }
-     
+  //   let num= this.state.userId
+  //  async function cal (){
+  //   let userId= await JSON.stringify(Cookies.getJSON('authenticatedUserNum'));
+  //   let UserId= await ""+num
+  //   userId=Number(userId);
+  //   UserId=Number(UserId);
+  //   return userId===UserId
+  //  }
+let userId= this.props.context.authentication.id
+let idVerify= Number(this.state.course.userId)===Number(userId)
+console.log(userId)
+console.log(idVerify)
+// let isSignedIn=this.props.context.authentication
+// let doIdsMatch = cal()
 
-let shouldUpdateRender = cal()
+let shouldUpdateRender
+ if(idVerify){
+   shouldUpdateRender=true
+ }
+ else{
+   shouldUpdateRender=false
+ }
 
 if(this.state.course){
 return(
