@@ -10,10 +10,14 @@ const { Course }= models;
 // authentication middlewear
 
 const authenticate= async (req,res,next)=>{
+  console.log(req)
+  console.log(req.password)
    let  message = null
    const credentials= auth(req)
-
+   
    if(credentials){
+     console.log("here it is")
+     console.log(credentials)
        let  gottenUsers =  await User.findAll();
        gottenUsers=gottenUsers.map(u=>u.toJSON());
 
@@ -46,6 +50,9 @@ const authenticate= async (req,res,next)=>{
   }
 
 }
+
+
+
 
 
 // function for validating  e-mail with regular expression
@@ -116,7 +123,8 @@ if(emailValidationResult && !doesEmailAlreadyExist ){
       }
     }
     else{
-       return  res.status(400).json({message:"email already exists in database or is invalid please check"})
+      console.log("invalid email or email already exists")
+       return res.status(400).json({message:"Invalid email or email already exists"})
     }
   });
 
@@ -196,9 +204,11 @@ if(emailValidationResult && !doesEmailAlreadyExist ){
 
   //Updates a course and returns no content
   router.put('/courses/:id',authenticate, async (req,res)=>{
+    console.log("passed")
     let  userCourse = await Course.findByPk(req.params.id)
     userCourse= userCourse.toJSON()
     const userIdofCourse= userCourse.userId
+    console.log("yaii")
     console.log(req.body)
     if(req.body.title && req.body.description){
      if (req.currentUser.id===userIdofCourse){

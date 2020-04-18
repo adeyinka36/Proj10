@@ -70,7 +70,13 @@ else{
   //   UserId=Number(UserId);
   //   return userId===UserId
   //  }
-let userId= this.props.context.authentication.id
+let userId
+if (this.props.context.authentication){
+  userId=this.props.context.authentication.id
+}
+else{
+  userId=null
+}
 let idVerify= Number(this.state.course.userId)===Number(userId)
 console.log(userId)
 console.log(idVerify)

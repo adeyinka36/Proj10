@@ -8,8 +8,8 @@ class UpdateCourse extends Component{
     constructor(props){
         super(props);
         this.state={
-          course:null,
-          courseId:null,
+          course:"",
+          courseId:"",
           emailAddress:"",
           password:"",
           title:null,
@@ -101,6 +101,7 @@ class UpdateCourse extends Component{
 
     }
     render(){
+      console.log(`this is the course id : ${this.state.courseId}`)
       console.log(this.state.errors)
       let error=  this.state.errors
      let errList
@@ -163,7 +164,7 @@ class UpdateCourse extends Component{
               </div>
               
             </div>
-            <div className="grid-100 pad-bottom"><button className="button" onClick={this.update}>Update Course</button><Link to="/courses"><button className="button button-secondary"  to='/courses'>Cancel</button></Link></div>
+            <div className="grid-100 pad-bottom"><button className="button" onClick={this.update}>Update Course</button><Link to={`/courses/${this.state.course.id}`}><button className="button button-secondary" >Cancel</button></Link></div>
           </form>
         </div>
         
