@@ -111,7 +111,7 @@ console.log(`this is the try catch error : ${err}`)
                   </form>
                 </div>
                 <p>&nbsp;</p>
-                <p>Don't have a user account? <Link to="/courses">Click here</Link> to sign up!</p>
+                <p>Don't have a user account? <Link to="/signup-UserSignUp">Click here</Link> to sign up!</p>
               </div>
             </div>
           </div>

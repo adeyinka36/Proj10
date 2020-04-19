@@ -1,7 +1,6 @@
 import React, {Component} from 'react'
 import Data from './Data.js'
 import Cookies from 'js-cookie';
-import {Redirect} from 'react-router-dom'
 
 const courseContext= React.createContext();
 

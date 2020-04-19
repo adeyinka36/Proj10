@@ -37,7 +37,7 @@ class UpdateCourse extends Component{
       this.props.context.data.getCourseDetail(this.props.match.params.id)
       .then(response=>{if(response.status!==200){
           this.props.history.push("/NotFound");return}
-         else if(response.status==500){
+         else if(response.status===500){
             this.props.push("/NotFound")
             ;return}
          else{

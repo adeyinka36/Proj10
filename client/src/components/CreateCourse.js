@@ -1,8 +1,6 @@
 import React , { Component } from  'react';
-import Cookies from 'js-cookie';
-import {Link,Redirect} from 'react-router-dom'
+import {Link} from 'react-router-dom'
 import {HeaderContext} from '../App.js'
-import Header from './Header.js';
 
 class CreateCourse extends Component{
     constructor(props){

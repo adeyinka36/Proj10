@@ -1,6 +1,5 @@
-import React, {Component} from 'react'
-import Cookies from 'js-cookie';
-import { Redirect } from 'react-router-dom';
+import  {Component} from 'react'
+
 
 export default class Data extends Component{
 
