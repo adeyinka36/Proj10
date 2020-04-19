@@ -1,6 +1,6 @@
 import React from 'react';
-import {Redirect,Link} from 'react-router-dom'
-import { HeaderContext } from '../App';
+import {Redirect} from 'react-router-dom'
+
 
 
 

@@ -3,19 +3,11 @@ import { Link,NavLink} from 'react-router-dom';
 
 
 
- class  Header extends Component{
-     constructor(props){
-         super(props);
-     }
-    
-   
-    render(){
-       
-       let auth=this.props.context.authentication
-       console.log( auth)
+ const Header =(props)=>{
+ let auth=props.context.authentication
   
   
-    if(auth){
+if(auth){
     return(
             <div className="header">
             <div className="bounds">
@@ -37,6 +29,6 @@ import { Link,NavLink} from 'react-router-dom';
         </div>
     )
 }
- }}
+ }
 
 export default Header

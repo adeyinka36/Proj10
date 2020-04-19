@@ -10,8 +10,7 @@ const { Course }= models;
 // authentication middlewear
 
 const authenticate= async (req,res,next)=>{
-  console.log(req)
-  console.log(req.password)
+  
    let  message = null
    const credentials= auth(req)
    

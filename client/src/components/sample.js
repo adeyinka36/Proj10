@@ -1,11 +1,11 @@
 import React from 'react'
 
 function Car(props){
-return(
- <div>
-   {props.me[0].title}
- </div>
-)
+// return(
+//  <div>
+//    {props.me[0].title}
+//  </div>
+// )
 }
 
 

@@ -15,7 +15,8 @@ class UserSignIn extends Component{
          emailAddress:null,
          id:"",
          firstname:null,
-         lastname:null
+         lastname:null,
+         error:[]
         }
     }
 
@@ -41,7 +42,7 @@ const signIn= this.props.context.data.signIn
 signIn(emailAddress,password)
 
 .then(res=>{if(res.status===401){
-  this.props.history.push("/error")
+  this.setState({error:"Invalid credentials"})
   return
   
   
@@ -77,12 +78,31 @@ console.log(`this is the try catch error : ${err}`)
 
 }
     render(){
+      let error=  this.state.error
+      let errList
+       if (error.length){
+         errList=<li>{error}</li>
+      
+       }
+       
       return(
        <div>
           <HeaderContext/>
             <div className="bounds">
+            
               <div className="grid-33 centered signin">
                 <h1>Sign In</h1>
+                {error.length?<div>
+            {/* vlidation errors/error */}
+            <div>
+            <h2 className="validation--errors--label">Validation errors</h2>
+            <div className="validation-errors">
+              <ul>
+              {errList}
+              </ul>
+            </div>
+          </div>
+          </div>:null}
                 <div>
                   <form>
                     <div><input id="emailAddress" name="emailAddress" type="text" className="" placeholder="Email Address" onChange={this.change}/></div>

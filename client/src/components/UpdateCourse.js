@@ -37,11 +37,15 @@ class UpdateCourse extends Component{
       this.props.context.data.getCourseDetail(this.props.match.params.id)
       .then(response=>{if(response.status!==200){
           this.props.history.push("/NotFound");return}
-         else if(response.status==500){ this.props.push("/NotFound");return}
+         else if(response.status==500){
+            this.props.push("/NotFound")
+            ;return}
          else{
        return response.json()}})
     
-      .then(res=>{this.setState({course:res,courseId:res.id,emailAddress:Cookies.getJSON('authenticatedUser').emailAddress,
+      .then(res=>{this.setState({course:res,
+        courseId:res.id,
+        emailAddress:Cookies.getJSON('authenticatedUser').emailAddress,
       password:Cookies.getJSON("authenticatedUser").password})
     })
     // redirect to forbidden if id stored in cookies isnt the same as the user id return for this course using the ".then" below
