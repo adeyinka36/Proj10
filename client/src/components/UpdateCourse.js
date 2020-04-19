@@ -143,7 +143,7 @@ class UpdateCourse extends Component{
             <div className="grid-66">
               <div className="course--header">
                 <h4 className="course--label">Course</h4>
-                <div><input id="title" name="title" type="text" className="input-title course--title--input" 
+                <div><input id="title" name="title" type="text" className="input-title course--title--input" defaultValue={this.state.course.title}
                      onChange={this.change}/></div>
                 <p>{`${this.state.course.User.firstName} ${this.state.course.User.lastName}`}</p>
               </div>
