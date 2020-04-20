@@ -18,6 +18,19 @@ class CourseDetail extends Component{
     }
 deleteCourse=async(e)=>{
   e.preventDefault()
+
+  // prevent reqest being sent by an unauthorized user
+  // let userId
+  // if (this.props.context.authentication){
+  //   userId=this.props.context.authentication.id
+  // }
+  // else{
+  //   userId=null
+  // }
+  // let idVerify= Number(this.state.course.userId)===Number(userId)
+  // if(!idVerify){
+  //   return this.props.history.push("/Forbidden")
+  // }
   await this.props.context.data.deleteCourse(this.state.id,this.props.context.authentication.emailAddress,this.props.context.authentication.password)
 .then(res=>{if(res.status===204){
   this.props.history.push("/courses")
@@ -77,8 +90,7 @@ else{
   userId=null
 }
 let idVerify= Number(this.state.course.userId)===Number(userId)
-console.log(userId)
-console.log(idVerify)
+
 // let isSignedIn=this.props.context.authentication
 // let doIdsMatch = cal()
 

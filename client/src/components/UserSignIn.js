@@ -54,7 +54,7 @@ else{
 }
 })
 .then(res=>{
-  console.log("works")
+  
   res.password=this.state.password
   let user=res
   this.props.context.make(user)

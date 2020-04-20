@@ -33,7 +33,7 @@ class UpdateCourse extends Component{
    
     componentDidMount(){
      
-
+    
       this.props.context.data.getCourseDetail(this.props.match.params.id)
       .then(response=>{if(response.status!==200){
           this.props.history.push("/NotFound");return}
@@ -47,6 +47,20 @@ class UpdateCourse extends Component{
         courseId:res.id,
         emailAddress:Cookies.getJSON('authenticatedUser').emailAddress,
       password:Cookies.getJSON("authenticatedUser").password})
+
+      // checking for verification to prevent update by unauthorized
+      
+      let userId
+      if (this.props.context.authentication){
+        userId=this.props.context.authentication.id
+      }
+      else{
+        userId=null
+      }
+      let idVerify= Number(this.state.course.userId)===Number(userId)
+      if(!idVerify){
+        return this.props.history.push("/Forbidden")
+      }
     })
     // redirect to forbidden if id stored in cookies isnt the same as the user id return for this course using the ".then" below
     // .then(res=>)

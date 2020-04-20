@@ -39,8 +39,8 @@ this.props.context.data.createNewCourse(course,this.props.context.authentication
      this.props.history.push("/courses")
   return
   }
-  else if(errors.status===500){return}
-  else{console.log(errors)
+  else if(errors.status===500){return this.props.history.push('/error')}
+  else{
   return errors.json()}})
 
   .then(errors =>{
