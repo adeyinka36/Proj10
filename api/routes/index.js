@@ -94,10 +94,10 @@ router.get('/',(req, res) => {
 
 
          const doesEmailAlreadyExist= dataBaseEmails.find(e=>e.emailAddress===email)
-         
-         console.log(emailValidationResult)
-         console.log("yes")
-         if(!req.body.emailAddress){res.status(400).json({message:"Please provide an email adress"})}
+         if(!req.body.emailAddress&&!req.body.password&&!req.body.firstName&!req.body.lastName){res.status(400).json({message:"Please provide values for all input fields"})}
+         if(!req.body.password&&!req.body.emailAddress){res.status(400).json({message:"Please provide valid emailaddress and password"})}
+         if(!req.body.password){res.status(400).json({message:"Please provide valid  password"})}
+         if(!req.body.emailAddress){res.status(400).json({message:"Please provide valid emailaddress"})}
          if(!req.body.firstName){res.status(400).json({message:"Please make sure name fields are filled"})}
          if(!req.body.lastName){res.status(400).json({message:"Please make sure name fields are filled"})}
 if(emailValidationResult && !doesEmailAlreadyExist ){

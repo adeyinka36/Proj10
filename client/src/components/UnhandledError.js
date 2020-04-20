@@ -1,7 +1,7 @@
 import React from 'react'
 import {HeaderContext} from '../App.js'
 
-const UnhanddledError=()=>{
+const UnhandledError=()=>{
     return(
         <div>
         <HeaderContext/>
@@ -11,4 +11,4 @@ const UnhanddledError=()=>{
 }
 
 
-export default UnhanddledError
+export default UnhandledError

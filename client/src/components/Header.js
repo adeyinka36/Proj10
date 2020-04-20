@@ -12,7 +12,7 @@ if(auth){
             <div className="header">
             <div className="bounds">
                 <Link to="/"><h1 className="header---logo">Courses</h1></Link>
-                <nav><span>{`Welcome ${auth.firstName} ${auth.lastName}`}</span><NavLink className="signout" to="/signout-UserSignOut">Sign Out</NavLink></nav>:
+                <nav><span>{`Welcome ${auth.firstName} ${auth.lastName}`}</span><NavLink className="signout" to="/signout">Sign Out</NavLink></nav>:
                   
             </div>
             </div>
@@ -23,8 +23,8 @@ if(auth){
         <div className="header">
         <div className="bounds">
         <Link to="/"><h1 className="header---logo">Courses</h1></Link>
-              <nav><NavLink className="signup" to="/signup-UserSignUp">Sign Up</NavLink></nav>
-             <nav> <NavLink  className="signin" to="/signin-UserSignIn">Sign In</NavLink></nav>
+              <nav><NavLink className="signup" to="/signup">Sign Up</NavLink></nav>
+             <nav> <NavLink  className="signin" to="/signin">Sign In</NavLink></nav>
         </div>
         </div>
     )

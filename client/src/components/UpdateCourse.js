@@ -20,6 +20,7 @@ class UpdateCourse extends Component{
         }
     }
 
+  // here i store values form the form ino the state 
    change=async ()=>{
    console.log(document.getElementById('title').value)
      await this.setState({
@@ -36,9 +37,9 @@ class UpdateCourse extends Component{
     
       this.props.context.data.getCourseDetail(this.props.match.params.id)
       .then(response=>{if(response.status!==200){
-          this.props.history.push("/NotFound");return}
+          this.props.history.push('/notFound');return}
          else if(response.status===500){
-            this.props.push("/NotFound")
+            this.props.push('/notFound')
             ;return}
          else{
        return response.json()}})
@@ -59,11 +60,11 @@ class UpdateCourse extends Component{
       }
       let idVerify= Number(this.state.course.userId)===Number(userId)
       if(!idVerify){
-        return this.props.history.push("/Forbidden")
+        return this.props.history.push("/forbidden")
       }
     })
     // redirect to forbidden if id stored in cookies isnt the same as the user id return for this course using the ".then" below
-    // .then(res=>)
+    
       
        .catch(err=>console.log(`there was this error ${err}`))
     }
@@ -72,18 +73,20 @@ class UpdateCourse extends Component{
     e.preventDefault()
   
     try{
-    
+  
+      // here i store the updates in a variable 
  let updates={title:this.state.title,
                    description:this.state.description,
                   estimatedTime:this.state.estimatedTime,
                 materialsNeeded:this.state.materialsNeeded}
-                
+      
+    // this function tries the update , stores errors in sate if there are any and pushes to appropraite route after
     this.props.context.data.updateCourse(this.state.courseId,updates, this.props.context.authentication.emailAddress,this.props.context.authentication.password)
     .then(err=>{if(err.status !==204){ 
       return err.json()}
 
       else{
-        return this.props.history.push("/courses")
+        return this.props.history.push("/")
       }
     })
    
@@ -119,6 +122,8 @@ class UpdateCourse extends Component{
   }
 
     }
+
+    // here i check if errors exist in state in order to render them on the form
     render(){
       console.log(`this is the course id : ${this.state.courseId}`)
       console.log(this.state.errors)

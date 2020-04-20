@@ -15,6 +15,8 @@ class UserSignUp extends Component{
      errors:[]
   }
 }
+
+// belloe i put the values of the input into the component state
   change=()=>{
     this.setState({
       firstName:document.getElementById("firstName").value,
@@ -26,6 +28,7 @@ class UserSignUp extends Component{
     })
   }
 
+  // here i store the values from state into variables to make it easier to work with them
 submit=(e)=>{
  e.preventDefault()
  try{
@@ -37,8 +40,9 @@ submit=(e)=>{
   const signUp= this.props.context.data.createUser
   const newUser={emailAddress,password,firstName,lastName}
   
+  // here i check to make sure the password and confirm passowrd from the form match before the signup
   if(password===confirmPassword){
-    // create user 
+    
     
     signUp(newUser)
     .then(res=>{if(res.status===201)
@@ -57,7 +61,8 @@ submit=(e)=>{
             
             
           }
-          else if(res.status===500){return this.props.history.push("/NotFound")}
+        
+          else if(res.status===500){return this.props.history.push("/notFound")}
           else{
             
             return res.json()
@@ -73,7 +78,7 @@ submit=(e)=>{
             Cookies.set('authenticatedUser', JSON.stringify(user), { expires: 1 });
           
           Cookies.set("userId",JSON.stringify(this.state.id))
-          this.props.history.push("/courses")
+          this.props.history.push("/")
           
           })
           
@@ -85,7 +90,7 @@ submit=(e)=>{
             // this.props.context.data.checkAuthentication()
           }
        }
-        else if(res.status===500){ this.props.history.push("/NotFound");return}
+        else if(res.status===500){ this.props.history.push("/notFound");return}
       else{
         return res.json()
       }
@@ -93,7 +98,7 @@ submit=(e)=>{
     .then(errors =>{
      
       if(errors){
-        
+        //  here i check errors recieved from the backend and store them as an array in state
         if(typeof errors===Array){
           
         let errorMessages=errors.map(err=>err.message)
@@ -124,7 +129,7 @@ catch(err){
 }    
     render(){
     
-      
+      // here i create a list with errors stored in state and insert them into the form for user to see 
       let error=  this.state.errors
      let errList
       if (error.length){
@@ -164,11 +169,11 @@ catch(err){
               <div><input id="password" name="password" type="password" className="" placeholder="Password" onChange={this.change}/></div>
               <div><input id="confirmPassword" name="confirmPassword" type="password" className="" placeholder="Confirm Password"
                   onChange={this.change}/></div>
-              <div className="grid-100 pad-bottom"><button className="button" onClick={this.submit}>Sign Up</button><Link  to="/courses"><button className="button button-secondary">Cancel</button></Link></div>
+              <div className="grid-100 pad-bottom"><button className="button" onClick={this.submit}>Sign Up</button><Link  to="/"><button className="button button-secondary">Cancel</button></Link></div>
             </form>
           </div>
           <p>&nbsp;</p>
-          <p>Already have a user account? <Link to="/signin-UserSignIn">Click here</Link> to sign in!</p>
+          <p>Already have a user account? <Link to="/signin">Click here</Link> to sign in!</p>
         </div>
       </div>
       </div>

@@ -36,7 +36,7 @@ createCourse= async(e)=>{
 this.props.context.data.createNewCourse(course,this.props.context.authentication.emailAddress,this.props.context.authentication.password)
 .then(errors =>{
   if(errors.status===201){
-     this.props.history.push("/courses")
+     this.props.history.push("/")
   return
   }
   else if(errors.status===500){return this.props.history.push('/error')}

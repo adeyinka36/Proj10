@@ -11,7 +11,7 @@ export default  (props) => {
 return(
     <div>
     
-    <Redirect to="/courses"/>
+    <Redirect to="/"/>
     </div>
 )
 }
