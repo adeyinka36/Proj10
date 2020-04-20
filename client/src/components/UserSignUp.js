@@ -1,6 +1,7 @@
 import React ,{Component} from 'react'
 import { Link} from 'react-router-dom';
-import {HeaderContext} from '../App.js'
+import {HeaderContext} from '../App.js';
+import Cookies from 'js-cookie';
 
 class UserSignUp extends Component{
     constructor(props){
@@ -42,7 +43,48 @@ submit=(e)=>{
     signUp(newUser)
     .then(res=>{if(res.status===201)
       {
-        return this.props.history.push("/courses")}
+        // sign them in after sign up
+        try{
+          const emailAddress= this.state.emailAddress
+          const password=this.state.password
+          const signIn= this.props.context.data.signIn
+          
+          signIn(emailAddress,password)
+          
+          .then(res=>{if(res.status===401){
+            this.setState({error:"Invalid credentials"})
+            return
+            
+            
+          }
+          else if(res.status===500){return this.props.history.push("/NotFound")}
+          else{
+            
+            return res.json()
+          }
+          })
+          .then(res=>{
+            console.log("works")
+            res.password=this.state.password
+            let user=res
+            this.props.context.make(user)
+          
+            this.setState({authenticated:user,id:res.id,firstname:res.firstName,lastname:res.lastName})
+            Cookies.set('authenticatedUser', JSON.stringify(user), { expires: 1 });
+          
+          Cookies.set("userId",JSON.stringify(this.state.id))
+          this.props.history.push("/courses")
+          
+          })
+          
+          
+          .catch(err=>console.log(`there was an error siginin in :${err}`))
+          }catch(err){
+          console.log(`this is the try catch error : ${err}`)
+          }finally{
+            // this.props.context.data.checkAuthentication()
+          }
+       }
         else if(res.status===500){ this.props.history.push("/NotFound");return}
       else{
         return res.json()

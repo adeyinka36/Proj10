@@ -70,6 +70,9 @@ const sequelize = new Sequelize({
           notEmpty:true,
           allowNull:false,
           validate: {
+            notEmpty:{
+              msg:"Please provide a value for  'title'"
+            },
             notNull: {
              
               msg: 'Please provide a value for "title"',
@@ -77,8 +80,12 @@ const sequelize = new Sequelize({
       }},
       description:{
           type:Sequelize.TEXT,
+          notEmpty:true,
           allowNull:false,
           validate: {
+            notEmpty:{
+              msg:"Please provide a value for  'description'"
+            },
             notNull: {
             
               msg: 'Please provide a value for "description"',

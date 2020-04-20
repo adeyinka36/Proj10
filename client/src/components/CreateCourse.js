@@ -44,7 +44,7 @@ this.props.context.data.createNewCourse(course,this.props.context.authentication
   return errors.json()}})
 
   .then(errors =>{
-    
+    console.log(errors)
     if(errors){
       this.setState({ 
        error: errors}

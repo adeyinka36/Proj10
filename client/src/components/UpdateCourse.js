@@ -65,8 +65,9 @@ class UpdateCourse extends Component{
                 materialsNeeded:this.state.materialsNeeded}
                 
     this.props.context.data.updateCourse(this.state.courseId,updates, this.props.context.authentication.emailAddress,this.props.context.authentication.password)
-    .then(err=>{if(err.status!==204){ 
-      return this.props.history.push("/Forbid")}
+    .then(err=>{if(err.status !==204){ 
+      return err.json()}
+
       else{
         return this.props.history.push("/courses")
       }
@@ -95,7 +96,7 @@ class UpdateCourse extends Component{
     })
     
     .catch(err => {
-  
+      console.log(err)
       this.props.history.push('/error');
     });
     

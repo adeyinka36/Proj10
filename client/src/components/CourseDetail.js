@@ -39,7 +39,7 @@ else{
       
      
       this.props.context.data.getCourseDetail(this.props.match.params.id)
-      .then(response=>{if(response.status!==200){ return this.props.history.push("/NotFound")}
+      .then(response=>{if(response.status!==200){console.log("nothin"); return this.props.history.push("/notFound")}
       else{
        return response.json()
       }})

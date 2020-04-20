@@ -98,7 +98,8 @@ router.get('/',(req, res) => {
          console.log(emailValidationResult)
          console.log("yes")
          if(!req.body.emailAddress){res.status(400).json({message:"Please provide an email adress"})}
-        
+         if(!req.body.firstName){res.status(400).json({message:"Please make sure name fields are filled"})}
+         if(!req.body.lastName){res.status(400).json({message:"Please make sure name fields are filled"})}
 if(emailValidationResult && !doesEmailAlreadyExist ){
     if(!req.body.password){ return res.status(400).json({message:"please provide valid password"})}
 
@@ -152,6 +153,7 @@ if(emailValidationResult && !doesEmailAlreadyExist ){
   
 // Returns course including users that own course for that id
   router.get('/courses/:id',async (req,res)=>{
+    try{
     let  course = await Course.findByPk(req.params.id, {
         attributes: {
           exclude: ["createdAt", "updatedAt"]
@@ -165,11 +167,17 @@ if(emailValidationResult && !doesEmailAlreadyExist ){
           }
         ]
       });
+  
     course=course.toJSON()
     
 
     
    res.status(200).json(course)
+    }
+    catch(err){
+      console.log("course not found")
+      res.status(404).end()
+    }
   }) 
 
   //Creates a course, sets the Location header to the URL for the course, and returns no content
@@ -223,11 +231,12 @@ if(emailValidationResult && !doesEmailAlreadyExist ){
     }catch(error){
         if(error.name==="SequelizeValidataionError"){
             console.log(`we have this validation error ${error}`)
-        res.status(403).end()
+        return res.status(403).json({message:"Please provide value for title and description"})
         }
         else{
-            res.status(400).end()
-            console.log(`this is is not a validation error ${error}`)
+            console.log(error)
+           return res.status(500).end()
+            
         }
       }
 }
@@ -236,7 +245,18 @@ else{
 }
     }
     else{
-        res.status(400).json({message:"please enter title and description"})
+      if(!req.body.title && !req.body.description){
+        console.log("no detal")
+        return   res.status(400).json({message:"please enter value for title and description"})}
+      
+      if(!req.body.title){
+      console.log("no title")
+      return   res.status(400).json({message:"please enter value for title "})}
+      if(!req.body.description){
+        console.log("no description")
+        return   res.status(400).json({message:"please enter value for description"})
+      }
+      
     }
 })
 
