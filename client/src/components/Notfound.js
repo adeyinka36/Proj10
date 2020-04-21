@@ -12,6 +12,7 @@ const NotFound=()=>{
     )
 }
 
+// console.log 
 
 
 export default NotFound
